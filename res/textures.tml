@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<textures>
+	<texture id="player_run" source="texture/run.png"/>
+	<texture id="player_idle" source="texture/idle.png"/>
+	<texture id="player_jump" source="texture/jump-Sheet3.png"/>
+	<texture id="player_fall" source="texture/fall-Sheet.png"/>
+	<texture id="player_death" source="texture/death-Sheet.png"/>
+	<texture id="player_attack" source="texture/attack-Sheet.png"/>
+	
+	<texture id="Soul_idle" source="texture/soul_idle.png"/>
+	<texture id="Soul_move" source="texture/soul_move.png"/>
+	<texture id="Soul_attack" source="texture/soul_attack.png"/>
+	<texture id="Soul_bullet" source="texture/soul_bullet.png"/>
+	<texture id="Soul_death" source="texture/soul_death.png"/>
+
+	<texture id="Enemy_idle" source="texture/enemy_idle.png"/>
+	<texture id="Enemy_run" source="texture/enemy_run.png"/>
+	<texture id="Enemy_beinghit" source="texture/enemy_beinghit.png"/>
+	<texture id="Enemy_attack" source="texture/enemy_attack.png"/>
+	<texture id="Enemy_fall" source="texture/enemy_fall.png"/>
+
+
+
+	<texture id="explosion" source="texture/Explosion.png"/>
+	<texture id="bullet" source="texture/projectile-Sheet.png"/>
+	<texture id="bg" source="texture/bg2.jpg"/>
+
+	<texture id="home-button-0" source="texture/1.png"/>
+	<texture id="home-button-1" source="texture/3.png"/>
+
+	<texture id="game-button-0" source="texture/4.png"/>
+	<texture id="game-button-1" source="texture/2.png"/>
+	<texture id="game-button-2" source="texture/6.png"/>
+	<texture id="game-button-3" source="texture/5.png"/>
+	
+	<texture id="home-bg" source="texture/cheem5.jpg"/>
+
+
+</textures>

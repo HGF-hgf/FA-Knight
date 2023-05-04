@@ -1,0 +1,3 @@
+D:/FA-knight/out/build/x64-Release/CMakeFiles/FA-Knight.dir
+D:/FA-knight/out/build/x64-Release/CMakeFiles/edit_cache.dir
+D:/FA-knight/out/build/x64-Release/CMakeFiles/rebuild_cache.dir
