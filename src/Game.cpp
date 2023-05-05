@@ -30,8 +30,8 @@ Game::Game(int score, int lv, float time)
 	player = new Player(new Properties("player", 60, 200, 128, 128), 1, 6, 150, -48, -44, -30, -52);
 	addCharacter(player);
 
-	for (int i = 0; i < 1;++i) {
-		Enemy* enemy = new Enemy(new Properties("enemy", /*rand() % (1280 - 640 + 1) +*/ 600  /*i*350*/, 93 + 35 /*+ rand() % (573 - 320 + 1) + 320*/, 192, 192), 1, 4, 150, -68, -34, -50, -93);
+	for (int i = 0; i < 3;++i) {
+		Enemy* enemy = new Enemy(new Properties("enemy", /*rand() % (1280 - 640 + 1) +*/ 600 * i  /*i*350*/, 93 + 35 /*+ rand() % (573 - 320 + 1) + 320*/, 192, 192), 1, 4, 150, -68, -34, -50, -93);
 		addCharacter(enemy);
 	}
 
@@ -95,20 +95,22 @@ void Game::RenderGUI() {
 	ImGui::PopStyleVar(2);
 	ImGui::End();
 
-	ImGui::SetNextWindowPos(ImVec2(50,25));
-	ImGui::Begin("Score", NULL,
-		ImGuiWindowFlags_NoTitleBar |
-		ImGuiWindowFlags_NoScrollbar |
-		ImGuiWindowFlags_NoResize |
-		ImGuiWindowFlags_AlwaysAutoResize);
-
-	ImGui::Text("Score: %d", m_Score);
-	ImGui::SameLine;
 	int time = m_Time;
 	int min = time / 60;
 	int sec = time % 60;
 	string minstr = (min < 10 ? "0" : "") + to_string(min);
 	string secstr = (sec < 10 ? "0" : "") + to_string(sec);
+
+	auto io1 = ImGui::GetIO();
+	ImGui::SetNextWindowPos(ImVec2(io1.DisplaySize.x * 0.18f, io1.DisplaySize.y * 0.07f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
+	ImGui::Begin("Score", NULL,
+		ImGuiWindowFlags_NoTitleBar |
+		ImGuiWindowFlags_NoScrollbar |
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_AlwaysAutoResize);
+	ImGui::SetWindowFontScale(2);
+	ImGui::Text("Score: %d     ", m_Score);
+	ImGui::SameLine();
 	ImGui::Text("Time: %s:%s", minstr.c_str(), secstr.c_str());
 	ImGui::End();
 

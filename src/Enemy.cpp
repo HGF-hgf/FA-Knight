@@ -44,8 +44,10 @@ void Enemy::AnimationState() {
 	//fall
 	if (m_beingHit) {
 		m_Animation->SetProps("Enemy_fall", 1, 4, 100);
-		if (m_Animation->GetCurrentFrame() == 3)
+		if (m_Animation->GetCurrentFrame() == 3) {
 			kill();
+			Game::Getinstance()->m_Score += 1;
+		}
 	}
 	//beinghit
 	//if(m_beingHit)
