@@ -42,7 +42,6 @@ void Player::Update(float dt) {
 		Engine::Getinstance()->ChangeLv = true;
 	}
 
-	cout << GetX() << endl;
 	//RUN FORWARD
 	if (Input::GetInstance()->GetAxisKey(HORIZONTAL) == FORWARD) {
 		m_Rigidbody->ApplyForceX(FORWARD * RUN_FORCE);
@@ -110,20 +109,21 @@ void Player::Update(float dt) {
 		m_AttackTime = ATTACK_TIME;
 	}
 
-	if (CollisionHandler::GetInstance()->MapCollision(m_Collider->Get()) && CollisionHandler::GetInstance()->checkTileID(m_Collider->Get()) == 240 || m_Collider->Get().y > 650) {
-		m_IsDead = true;
-	}
 
 	Character::Update(dt);	
 	AnimationState();
 	m_Animation->Update(dt);
+	if (GetY() >= 570) {
+		dead = true;
+	}
+	//cout << dead << endl;
 }
 
 void Player::OnCollide(Character* source)
 {
-	if (source->GetName() == "enemy") {
+	/*if (source->GetName() == "enemy") {
 		dead = true;
-	}
+	}*/
 }
 
 void Player::AnimationState() {

@@ -21,8 +21,11 @@ public:
 
 	virtual void Update(float dt);
 	virtual void OnCollide(Character* source);
+
 	
 private:
+	friend class Game;
+	friend class Engine;
 	void AnimationState();
 	float m_Vision;
 	int m_lastAttack;

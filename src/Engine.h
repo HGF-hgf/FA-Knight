@@ -49,9 +49,12 @@ public:
 	vector<_Mix_Music*> m_music;
 	map<string, Page*> PageMap;
 	Game* game = nullptr;
+
+	int p_score = 0;
 	string currentPage;
 	bool ChangeLv = false;
-
+	string m_min;
+	string m_sec;
 private:
 	
 	Engine() {}

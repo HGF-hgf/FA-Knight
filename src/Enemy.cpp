@@ -49,8 +49,6 @@ void Enemy::AnimationState() {
 			Game::Getinstance()->m_Score += 1;
 		}
 	}
-	//beinghit
-	//if(m_beingHit)
 }
 
 void Enemy::moveToPlayer() {

@@ -34,6 +34,8 @@
 	<texture id="game-button-3" source="texture/5.png"/>
 	
 	<texture id="home-bg" source="texture/cheem5.jpg"/>
+	<texture id="pause-bg" source="texture/cheems.jpg"/>
+	<texture id="die-bg" source="texture/cheems5.jpg"/>
 
 
 </textures>

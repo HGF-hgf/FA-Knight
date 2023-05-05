@@ -50,7 +50,8 @@ void Home::OnRenderGUI()
         Mix_PauseMusic();
 		Engine::Getinstance()->GoToPage("game");
         Mix_PlayMusic(Engine::Getinstance()->m_music[1], -1);
-        Mix_VolumeMusic(5);
+        Mix_VolumeMusic(15);
+     
 	}
 
     ImGui::PopStyleColor(1);

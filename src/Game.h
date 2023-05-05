@@ -31,12 +31,16 @@ public:
 	int m_Score = 0;
 	float m_Time = 0;
 	int lv;
+	string minstr;
+	string secstr;
 private:
+	
 	float SetBotPos();
 	Map* m_LevelMap;
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 	Player* player;
 	float m_lasttIme;
+	
 
 };

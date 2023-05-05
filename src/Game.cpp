@@ -1,4 +1,4 @@
-#include "Game.h"
+#include"Game.h"
 #include"GameObject.h"
 #include"Texture.h"
 #include"Input.h"
@@ -10,6 +10,7 @@
 #include"Bullet.h"
 #include"Soul.h"
 #include"Engine.h"
+
 
 Game* Game::s_Instance = nullptr;
 
@@ -68,53 +69,112 @@ void Game::Render()
 
 void Game::RenderGUI() {
 
-	//Pause
-	auto buttonImage = Texture::Getinstance()->GetTexture("game-button-0");
-	auto io = ImGui::GetIO();
-
-	ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.02f, io.DisplaySize.y * 0.07f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
-
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-	ImGui::Begin("Game Page Menu", NULL,
-		ImGuiWindowFlags_NoTitleBar |
-		ImGuiWindowFlags_NoScrollbar |
-		ImGuiWindowFlags_NoResize |
-		ImGuiWindowFlags_AlwaysAutoResize);
-	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-
-	if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage, ImVec2(36, 36))) {
-
-		Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
-		Mix_PauseMusic();
-		m_Paused = true;
-		Engine::Getinstance()->GoToPage("pause");
-	}
-
-	ImGui::PopStyleColor(1);
-	ImGui::PopStyleVar(2);
-	ImGui::End();
-
 	int time = m_Time;
 	int min = time / 60;
 	int sec = time % 60;
-	string minstr = (min < 10 ? "0" : "") + to_string(min);
-	string secstr = (sec < 10 ? "0" : "") + to_string(sec);
+	minstr = (min < 10 ? "0" : "") + to_string(min);
+	secstr = (sec < 10 ? "0" : "") + to_string(sec);
 
-	auto io1 = ImGui::GetIO();
-	ImGui::SetNextWindowPos(ImVec2(io1.DisplaySize.x * 0.18f, io1.DisplaySize.y * 0.07f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
-	ImGui::Begin("Score", NULL,
-		ImGuiWindowFlags_NoTitleBar |
-		ImGuiWindowFlags_NoScrollbar |
-		ImGuiWindowFlags_NoResize |
-		ImGuiWindowFlags_AlwaysAutoResize);
-	ImGui::SetWindowFontScale(2);
-	ImGui::Text("Score: %d     ", m_Score);
-	ImGui::SameLine();
-	ImGui::Text("Time: %s:%s", minstr.c_str(), secstr.c_str());
-	ImGui::End();
+	Engine::Getinstance()->m_min = minstr;
+	Engine::Getinstance()->m_sec = secstr;
+	Engine::Getinstance()->p_score = m_Score;
 
+	//Pause
+	if (!player->dead) {
+		ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 0.0f;
+		auto buttonImage = Texture::Getinstance()->GetTexture("game-button-0");
+		auto io = ImGui::GetIO();
 
+		ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.23f, io.DisplaySize.y * 0.07f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		ImGui::Begin("Game Page Menu", NULL,
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoScrollbar |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+
+		if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage, ImVec2(36, 36))) {
+
+			Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
+			Mix_PauseMusic();
+			m_Paused = true;
+			Engine::Getinstance()->GoToPage("pause");
+		}
+		ImGui::SameLine();
+		ImGui::SetWindowFontScale(3);
+		ImGui::Text("Score: %d     ", m_Score);
+		ImGui::SameLine();
+		ImGui::Text("Time: %s:%s ", minstr.c_str(), secstr.c_str());
+
+		ImGui::PopStyleColor();
+		ImGui::PopStyleVar(2);
+		ImGui::End();
+	}
+
+	if (player->dead) {
+		Engine::Getinstance()->GoToPage("gameover");
+		//Mix_PauseMusic;
+		//auto m_backgroundTexure = Texture::Getinstance()->GetTexture("die-bg");
+		//auto m_io = ImGui::GetIO();
+		//ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
+		//ImGui::SetNextWindowSize(m_io.DisplaySize);
+		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		//ImGui::Begin("Home Page Background", NULL,
+		//	ImGuiWindowFlags_NoDecoration |
+		//	ImGuiWindowFlags_NoScrollbar |
+		//	ImGuiWindowFlags_NoBringToFrontOnFocus |
+		//	ImGuiWindowFlags_NoResize |
+		//	ImGuiWindowFlags_NoScrollWithMouse);
+
+		//ImGui::Image((ImTextureID)m_backgroundTexure,
+		//	ImVec2(m_io.DisplaySize.x, m_io.DisplaySize.y));
+
+		//ImGui::PopStyleVar(2);
+		//ImGui::End();
+
+		//auto buttonImage2 = Texture::Getinstance()->GetTexture("game-button-3");
+		//auto buttonImage3 = Texture::Getinstance()->GetTexture("game-button-2");
+		//auto io2 = ImGui::GetIO();
+
+		//ImGui::SetNextWindowPos(ImVec2(io2.DisplaySize.x * 0.5f, io2.DisplaySize.y * 0.55f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
+
+		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		//ImGui::Begin("Pause Page Menu 1", NULL,
+		//	ImGuiWindowFlags_NoTitleBar |
+		//	ImGuiWindowFlags_NoScrollbar |
+		//	ImGuiWindowFlags_NoResize |
+		//	ImGuiWindowFlags_AlwaysAutoResize);
+		//ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+
+		//ImGui::SetWindowFontScale(3);
+		//ImGui::Text("Score: %d", m_Score);
+		//ImGui::Text("Time: %s:%s ", minstr.c_str(), secstr.c_str());
+	
+		//if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage2, ImVec2(96, 96))) {
+		//	Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
+		//	Engine::Getinstance()->GoToPage("home");
+		//}
+		//ImGui::SameLine();
+		//if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage3, ImVec2(96, 96))) {
+
+		//	Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
+		//	Mix_PauseMusic();
+		//	//Engine::Getinstance()->QuitGame();
+		//	Engine::Getinstance()->GoToPage("game");
+		//	Mix_PlayMusic(Engine::Getinstance()->m_music[1], -1);
+		//	Mix_VolumeMusic(5);
+		//}
+
+		//
+		//ImGui::PopStyleColor();
+		//ImGui::PopStyleVar(2);
+		//ImGui::End();
+	}
 
 }
 
@@ -154,7 +214,7 @@ void Game::Update()
 
 		if (character->IsDead())
 			m_removedIds.push_back(character->GetId());
-		
+
 
 	}
 
@@ -163,8 +223,10 @@ void Game::Update()
 
 	float currentTime = SDL_GetTicks();
 	float dtTime = currentTime - m_lasttIme;
-	m_Time += dtTime / 1000;
-	m_lasttIme = currentTime;
+	if (!player->dead) {
+		m_Time += dtTime / 1000;
+		m_lasttIme = currentTime;
+	}
 }
 
 

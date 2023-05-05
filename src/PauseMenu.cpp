@@ -9,8 +9,9 @@ void PauseMenu::OnRender()
 
 void PauseMenu::OnRenderGUI()
 {
+	
     //back ground
-    auto m_backgroundTexure = Texture::Getinstance()->GetTexture("home-bg");
+    auto m_backgroundTexure = Texture::Getinstance()->GetTexture("pause-bg");
     auto m_io = ImGui::GetIO();
     ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
     ImGui::SetNextWindowSize(m_io.DisplaySize);

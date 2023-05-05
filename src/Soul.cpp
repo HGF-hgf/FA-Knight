@@ -74,7 +74,7 @@ void Soul::AnimationState() {
 		m_Animation->SetProps("Soul_death", 1, 8, 250);
 		if (m_Animation->GetCurrentFrame() == 7) {
 			kill();
-			//Game::Getinstance()->m_Score++;
+			Game::Getinstance()->m_Score += 1;
 		}
 	}
 }
