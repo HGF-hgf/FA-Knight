@@ -67,10 +67,10 @@ bool Engine::Init() {
 	if (IMG_Init(IMG_INIT_PNG) == 0 || IMG_Init(IMG_INIT_JPG) == 0)
 		std::cout << "shit";
 
-	//if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-	//	SDL_Log("FAILED TO INITIALIZE SDL\n", SDL_GetError());
-	//	return false;
-	//}
+	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+		SDL_Log("FAILED TO INITIALIZE SDL\n", SDL_GetError());
+		return false;
+	}
 
 	
 	
@@ -91,7 +91,8 @@ bool Engine::Init() {
 		cout<<"Failed to load map\n";
 		return false;
 	}
-
+	cout << m_lv << endl;
+	
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -119,7 +120,7 @@ bool Engine::Init() {
 void Engine::Render() {
 	SDL_SetRenderDrawColor(m_Renderer, 164, 218, 254, 255);
 	SDL_RenderClear(m_Renderer);
-
+	
 	/*Texture::Getinstance()->Draw("bg", 0, 0, 1920, 1080, 1, 0.9, 0.3);
 
 	m_LevelMap->Render();
@@ -148,14 +149,18 @@ void Engine::Render() {
 	);
 
 	SDL_RenderPresent(m_Renderer);
+	
 }
 
 void Engine::Update() {
 	PageMap[currentPage]->Update();
 	if (ChangeLv) {
 		StartLv(game->lv + 1);
+		m_lv++;
 		ChangeLv = false;
 	}
+	//LevelSet();
+	
 }
 
 
@@ -204,6 +209,15 @@ void Engine::StartLv(int lv)
 	game = new Game(score, lv, time);
 }
 
+//bool Engine::LevelSet()
+//{
+//	if (!MapParser::GetInstance()->Load()) {
+//		cout << "Failed to load map\n";
+//		return false;
+//	}
+//	cout << m_lv << endl;
+//}
+
 
 
 void Engine::Clean() {
@@ -226,3 +240,4 @@ void Engine::Quit() {
 //float Engine::SetBotPos() {
 //
 //}
+

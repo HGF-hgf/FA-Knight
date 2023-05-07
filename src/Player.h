@@ -8,7 +8,7 @@
 #include"Enemy.h"
 
 #define JUMP_TIME 2.0f
-#define JUMP_FORCE 7.0f
+#define JUMP_FORCE 9.0f
 
 #define RUN_FORCE 3.0f
 #define ATTACK_TIME 500 // ms
@@ -26,6 +26,7 @@ public:
 private:
 	friend class Game;
 	friend class Engine;
+	friend class Enemy;
 	void AnimationState();
 	float m_Vision;
 	int m_lastAttack;

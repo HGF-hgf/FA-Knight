@@ -1,15 +1,21 @@
 #include"MapParser.h"
-
+#include"Game.h"
+#include"Engine.h"
 using namespace std;
 
 MapParser* MapParser::s_Instance = nullptr;
 
 //ktra map co dc load ko
 bool MapParser::Load() {
-	if(!Parse("Level1", RESOURCE_PATH + "texture/map/map1.tmx"))
+	
+	if (!Parse("Level1" , RESOURCE_PATH + "texture/map/map1.tmx"))
 		return false;
-	if (!Parse("Level2", RESOURCE_PATH + "texture/map/map2.tmx"))
-		return false;
+	
+	
+		//if (!Parse("Level2" /*+ to_string(Engine::Getinstance()->m_lv)*/, RESOURCE_PATH + "texture/map/map" +"2"/* to_string(Engine::Getinstance()->m_lv) */ + ".tmx"))
+		//	return false;
+		//cout << Engine::Getinstance()->m_lv << endl;
+		//
 	return true;
 	
 }

@@ -11,6 +11,7 @@ Enemy::Enemy(Properties* props, float Row, float FrameCount, float AnimationSpee
 	m_JumpTime = JUMP_TIME;
 	m_JumpForce = JUMP_FORCE;
 	m_AttackTime = ATTACK_TIME;
+	
 }
 
 
@@ -28,6 +29,10 @@ void Enemy::OnCollide(Character* source)
 		HP--;
 		
 	}
+	
+	if (p == 1 && source->GetName() == "player") {
+		Game::Getinstance()->Getplayer()->m_BeingHit = true;
+	}
 	if (HP == 0)
 		m_beingHit = true;
 }
@@ -39,8 +44,12 @@ void Enemy::AnimationState() {
 	if (m_IsRunning && !m_IsAttacking)
 		m_Animation->SetProps("Enemy_run", 1, 4, 150);
 	//attack
-	if (m_IsAttacking)
-		m_Animation->SetProps("Enemy_attack", 1, 4, 150);
+	if (m_IsAttacking) {
+		m_Animation->SetProps("Enemy_attack", 1, 4, 100);
+		if (m_Animation->GetCurrentFrame() == 3)
+			p = 1;
+	}
+	
 	//fall
 	if (m_beingHit) {
 		m_Animation->SetProps("Enemy_fall", 1, 4, 100);
@@ -129,3 +138,4 @@ SDL_Rect Enemy::GetSwordBox()
 	float h = 30;
 	return SDL_Rect(x, y, w, h);
 }
+

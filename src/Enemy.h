@@ -18,6 +18,7 @@ public:
 	virtual void OnCollide(Character* source);
 	void moveToPlayer();
 	void autoMove();
+
 	SDL_Rect GetSwordBox();
 	//void KnockBack();
 	
@@ -27,4 +28,5 @@ private:
 	float m_high;
 	int HP = 3;
 	bool m_beingHit = false;
+	int p;
 };

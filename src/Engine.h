@@ -49,8 +49,11 @@ public:
 	vector<_Mix_Music*> m_music;
 	map<string, Page*> PageMap;
 	Game* game = nullptr;
+	//bool LevelSet();
+
 
 	int p_score = 0;
+	int m_lv = 1;
 	string currentPage;
 	bool ChangeLv = false;
 	string m_min;

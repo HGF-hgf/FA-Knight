@@ -37,10 +37,11 @@ void Player::Update(float dt) {
 		y = m_Transform->Y + 44;
 		
 	}
-
-	if (m_Transform->X >= 500) {
+	cout << GetX() << " " << GetY() << endl; //159 413 // 3010 607
+	//2181 445
+	/*if (m_Transform->X >= 500) {
 		Engine::Getinstance()->ChangeLv = true;
-	}
+	}*/
 
 	//RUN FORWARD
 	if (Input::GetInstance()->GetAxisKey(HORIZONTAL) == FORWARD) {
@@ -113,17 +114,23 @@ void Player::Update(float dt) {
 	Character::Update(dt);	
 	AnimationState();
 	m_Animation->Update(dt);
-	if (GetY() >= 570) {
+	if (GetY() >= 647) {
 		dead = true;
 	}
+	//cout << to_string(Engine::Getinstance()->m_lv) << endl;
+	//cout << Engine::Getinstance()->m_lv << endl;
 	//cout << dead << endl;
 }
 
 void Player::OnCollide(Character* source)
 {
-	/*if (source->GetName() == "enemy") {
-		dead = true;
-	}*/
+	if (source->GetName() == "soulbullet") {
+		m_BeingHit = true;
+	}
+	if (source->GetName() == "portal") {
+		m_Transform->X = 4200;
+		m_Transform->Y = 100;
+	}
 }
 
 void Player::AnimationState() {
@@ -143,8 +150,11 @@ void Player::AnimationState() {
 	if (m_IsFalling)
 		m_Animation->SetProps("player_fall", 1, 3, 450);
 	//dead
-	/*if (dead && !m_IsAttacking && !m_IsRunning && !m_IsFalling && !m_IsJumping && !idle)
-		m_Animation->SetProps("player_death", 1, 4, 200);*/
+	if (m_BeingHit) {
+		m_Animation->SetProps("player_death", 1, 4, 450);
+		if (m_Animation->GetCurrentFrame() == 3)
+			dead = true;
+	}
 	//attack
 	if (m_IsAttacking)
 		m_Animation->SetProps("player_attack", 1, 3, 50);

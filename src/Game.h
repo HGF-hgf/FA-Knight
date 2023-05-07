@@ -4,6 +4,7 @@
 #include"Map.h"
 #include"Player.h"
 #include"Bullet.h"
+#include"Portal.h"
 
 class Game {
 public:
@@ -40,6 +41,8 @@ private:
 	SDL_Window* m_Window;
 	SDL_Renderer* m_Renderer;
 	Player* player;
+	Enemy* enemy;
+	Portal* portal;
 	float m_lasttIme;
 	
 

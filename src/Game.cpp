@@ -12,6 +12,7 @@
 #include"Engine.h"
 
 
+
 Game* Game::s_Instance = nullptr;
 
 Game::Game(int score, int lv, float time)
@@ -24,22 +25,31 @@ Game::Game(int score, int lv, float time)
 	m_lasttIme = SDL_GetTicks();
 
 	m_LevelMap = MapParser::GetInstance()->GetMap("Level" + to_string(lv));
-	
+	//Engine::Getinstance()->m_lv = lv;
 	
 
 	
-	player = new Player(new Properties("player", 60, 200, 128, 128), 1, 6, 150, -48, -44, -30, -52);
+	player = new Player(new Properties("player", 0, 508, 128, 128), 1, 6, 150, -48, -36, -30, -60);
 	addCharacter(player);
 
-	for (int i = 0; i < 3;++i) {
-		Enemy* enemy = new Enemy(new Properties("enemy", /*rand() % (1280 - 640 + 1) +*/ 600 * i  /*i*350*/, 93 + 35 /*+ rand() % (573 - 320 + 1) + 320*/, 192, 192), 1, 4, 150, -68, -34, -50, -93);
+	//310
+	//1900
+
+	
+	for (int i = 0; i < 5;++i) {
+		enemy = new Enemy(new Properties("enemy", rand() % (1900 - 310 + 1) + 310 , 400, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
 		addCharacter(enemy);
 	}
 
-	/*for (int i = 0; i < 1;++i) {
-		Soul* soul = new Soul(new Properties("soul", 600, 128, 128, 128), 1, 5, 150, -48, -30, -30, -76);
+	
+
+	for (int i = 0; i < 5;++i) {
+		Soul* soul = new Soul(new Properties("soul", rand() % (1900 - 310 + 1) + 310, 400, 128, 128), 1, 5, 150, -48, -30, -30, -76);
 		addCharacter(soul);
-	}*/
+	}
+
+	portal = new Portal(new Properties("portal", 2200, 350, 192, 192), 1, 9, 150, -80, -16, -60, -171);
+	addCharacter(portal);
 
 	Camera::GetInstance()->SetTarget(player->GetOrigin());
 
@@ -47,8 +57,8 @@ Game::Game(int score, int lv, float time)
 
 void Game::Render()
 {
-	Texture::Getinstance()->Draw("bg", 0, 0, 1920, 1080, 1, 0.9, 0.3);
-
+	Texture::Getinstance()->Draw("bg1", 0, 0, 1920, 1080, 1, 0.9, 0.45);
+	Texture::Getinstance()->Draw("bg2", 1900, 0, 1920, 1080, 1, 0.9, 0.45);
 	m_LevelMap->Render();
 
 	for (auto& it : m_GameObjects) {
@@ -56,13 +66,13 @@ void Game::Render()
 		GameObject* object = it.second;
 		object->Draw();
 
-		if (((Character*) object)->GetName() == "enemy") {
+		/*if (((Character*) object)->GetName() == "enemy") {
 			Enemy* enemy = (Enemy*)object;
 			Vector2D cam = Camera::GetInstance()->GetPosition();
 			SDL_Rect m_Box = enemy->GetSwordBox();
 			SDL_Rect box = { (int)(m_Box.x - cam.X), (int)(m_Box.y - cam.Y), m_Box.w,  m_Box.h };
 			SDL_RenderDrawRect(Engine::Getinstance()->GetRenderer(), &box);
-		}
+		}*/
 	}
 	
 }
@@ -116,64 +126,6 @@ void Game::RenderGUI() {
 
 	if (player->dead) {
 		Engine::Getinstance()->GoToPage("gameover");
-		//Mix_PauseMusic;
-		//auto m_backgroundTexure = Texture::Getinstance()->GetTexture("die-bg");
-		//auto m_io = ImGui::GetIO();
-		//ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-		//ImGui::SetNextWindowSize(m_io.DisplaySize);
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-		//ImGui::Begin("Home Page Background", NULL,
-		//	ImGuiWindowFlags_NoDecoration |
-		//	ImGuiWindowFlags_NoScrollbar |
-		//	ImGuiWindowFlags_NoBringToFrontOnFocus |
-		//	ImGuiWindowFlags_NoResize |
-		//	ImGuiWindowFlags_NoScrollWithMouse);
-
-		//ImGui::Image((ImTextureID)m_backgroundTexure,
-		//	ImVec2(m_io.DisplaySize.x, m_io.DisplaySize.y));
-
-		//ImGui::PopStyleVar(2);
-		//ImGui::End();
-
-		//auto buttonImage2 = Texture::Getinstance()->GetTexture("game-button-3");
-		//auto buttonImage3 = Texture::Getinstance()->GetTexture("game-button-2");
-		//auto io2 = ImGui::GetIO();
-
-		//ImGui::SetNextWindowPos(ImVec2(io2.DisplaySize.x * 0.5f, io2.DisplaySize.y * 0.55f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
-
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
-		//ImGui::Begin("Pause Page Menu 1", NULL,
-		//	ImGuiWindowFlags_NoTitleBar |
-		//	ImGuiWindowFlags_NoScrollbar |
-		//	ImGuiWindowFlags_NoResize |
-		//	ImGuiWindowFlags_AlwaysAutoResize);
-		//ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-
-		//ImGui::SetWindowFontScale(3);
-		//ImGui::Text("Score: %d", m_Score);
-		//ImGui::Text("Time: %s:%s ", minstr.c_str(), secstr.c_str());
-	
-		//if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage2, ImVec2(96, 96))) {
-		//	Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
-		//	Engine::Getinstance()->GoToPage("home");
-		//}
-		//ImGui::SameLine();
-		//if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage3, ImVec2(96, 96))) {
-
-		//	Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
-		//	Mix_PauseMusic();
-		//	//Engine::Getinstance()->QuitGame();
-		//	Engine::Getinstance()->GoToPage("game");
-		//	Mix_PlayMusic(Engine::Getinstance()->m_music[1], -1);
-		//	Mix_VolumeMusic(5);
-		//}
-
-		//
-		//ImGui::PopStyleColor();
-		//ImGui::PopStyleVar(2);
-		//ImGui::End();
 	}
 
 }

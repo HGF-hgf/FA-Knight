@@ -17,6 +17,7 @@ Character::Character(Properties* props, float Row, float FrameCount, float Anima
 	m_IsGrounded = false;
 	m_IsAttacking = false;
 	m_IsDead = false;
+	m_BeingHit = false;
 
 	m_Flip = SDL_FLIP_NONE;
 
@@ -98,6 +99,9 @@ float Character::GetX() {
 float Character::GetY() {
 	return m_Transform->Y;
 }
+
+
+
 
 SDL_Rect Character::GetBox()
 {

@@ -23,11 +23,12 @@ public:
 	void kill();
 
 	bool IsDead() const;
-
+	
 	std::string GetName() const;
 
 	float GetX();
 	float GetY();
+	
 
 	SDL_Rect GetBox();
 
@@ -38,6 +39,7 @@ protected:
 	bool m_IsFalling;
 	bool m_IsAttacking;
 	bool m_IsDead;
+	bool m_BeingHit;
 
 	float m_RunForce;
 	float m_JumpTime; // Time the Enemy leave the ground

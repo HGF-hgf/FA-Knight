@@ -36,13 +36,13 @@ void Soul::AnimationState() {
 	int x, y;
 
 	if (m_Flip == SDL_FLIP_NONE) {
-		x = m_Transform->X;
+		x = m_Transform->X+30;
 		y = m_Transform->Y + 3;
 
 	}
 
 	if (m_Flip == SDL_FLIP_HORIZONTAL) {
-		x = m_Transform->X;
+		x = m_Transform->X-30;
 		y = m_Transform->Y + 3;
 
 	}
@@ -120,7 +120,7 @@ void Soul::moveToPlayer() {
 
 	//Attack
 	
-	if (((m_Vision >= -200 && m_Vision < 0) || (m_Vision <= 200 && m_Vision > 0)) ) {
+	if (((m_Vision >= -200 && m_Vision < 5) || (m_Vision <= 200 && m_Vision > 5)) ) {
 		m_Rigidbody->UnsetForce();
 		m_IsAttacking = true;
 		
