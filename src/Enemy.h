@@ -9,6 +9,7 @@
 using namespace std;
 
 #define VEL 1.5f
+#define KNOCKBACKFORCE 5.0f 
 
 class Enemy : public Character {
 public:
@@ -16,17 +17,18 @@ public:
 
 	virtual void Update(float dt);
 	virtual void OnCollide(Character* source);
-	void moveToPlayer();
+	void moveToPlayer(float dt);
 	void autoMove();
 
 	SDL_Rect GetSwordBox();
-	//void KnockBack();
-	
+	void KnockBack(float dt);
+
 private:
 	void AnimationState();
 	float m_Vision;
 	float m_high;
 	int HP = 3;
 	bool m_beingHit = false;
+	bool dead = false;
 	int p;
 };

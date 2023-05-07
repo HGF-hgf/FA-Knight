@@ -36,17 +36,17 @@ Game::Game(int score, int lv, float time)
 	//1900
 
 	
-	for (int i = 0; i < 5;++i) {
-		enemy = new Enemy(new Properties("enemy", rand() % (1900 - 310 + 1) + 310 , 400, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
+	for (int i = 0; i < 2;++i) {
+		enemy = new Enemy(new Properties("enemy", /*rand() % (1900 - 310 + 1) + 310*/400 * (i+1) , 400, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
 		addCharacter(enemy);
 	}
 
 	
 
-	for (int i = 0; i < 5;++i) {
+	/*for (int i = 0; i < 5;++i) {
 		Soul* soul = new Soul(new Properties("soul", rand() % (1900 - 310 + 1) + 310, 400, 128, 128), 1, 5, 150, -48, -30, -30, -76);
 		addCharacter(soul);
-	}
+	}*/
 
 	portal = new Portal(new Properties("portal", 2200, 350, 192, 192), 1, 9, 150, -80, -16, -60, -171);
 	addCharacter(portal);
@@ -66,13 +66,13 @@ void Game::Render()
 		GameObject* object = it.second;
 		object->Draw();
 
-		/*if (((Character*) object)->GetName() == "enemy") {
+		if (((Character*) object)->GetName() == "enemy") {
 			Enemy* enemy = (Enemy*)object;
 			Vector2D cam = Camera::GetInstance()->GetPosition();
 			SDL_Rect m_Box = enemy->GetSwordBox();
 			SDL_Rect box = { (int)(m_Box.x - cam.X), (int)(m_Box.y - cam.Y), m_Box.w,  m_Box.h };
 			SDL_RenderDrawRect(Engine::Getinstance()->GetRenderer(), &box);
-		}*/
+		}
 	}
 	
 }

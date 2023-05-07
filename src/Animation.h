@@ -33,4 +33,6 @@ protected:
     bool m_Repeat;
     bool m_IsEnded;
     int m_CurrentFrame;
+    int m_LastTime;
+    string m_LastAnimation;
 };

@@ -37,7 +37,7 @@ void Player::Update(float dt) {
 		y = m_Transform->Y + 44;
 		
 	}
-	cout << GetX() << " " << GetY() << endl; //159 413 // 3010 607
+	//cout << GetX() << " " << GetY() << endl; //159 413 // 3010 607
 	//2181 445
 	/*if (m_Transform->X >= 500) {
 		Engine::Getinstance()->ChangeLv = true;

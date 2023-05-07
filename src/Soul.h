@@ -28,6 +28,6 @@ private:
 	float m_Vision;
 	float m_high;
 	int m_lastAttack;
-	int HP = 3;
+	int HP = 1;
 	bool m_beingHit = false;
 };

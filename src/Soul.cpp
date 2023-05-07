@@ -34,7 +34,7 @@ void Soul::OnCollide(Character* source)
 
 void Soul::AnimationState() {
 	int x, y;
-
+	int currentTick = SDL_GetTicks();
 	if (m_Flip == SDL_FLIP_NONE) {
 		x = m_Transform->X+30;
 		y = m_Transform->Y + 3;
@@ -47,12 +47,16 @@ void Soul::AnimationState() {
 
 	}
 	//idle
-	m_Animation->SetProps("Soul_idle", 1, 5, 170);
-	//run 
-	if (m_IsRunning && !m_IsAttacking)
-		m_Animation->SetProps("Soul_move", 1, 8, 150);
+	if (m_beingHit) {
+		m_Animation->SetProps("Soul_death", 1, 8, 250);
+		if (m_Animation->GetCurrentFrame() == 7) {
+			kill();
+			Game::Getinstance()->m_Score += 1;
+		}
+	}
+	
 	//attack
-	int currentTick = SDL_GetTicks();
+	else
 	if (m_IsAttacking) {
 		m_Animation->SetProps("Soul_attack", 1, 10, 150);
 
@@ -66,17 +70,11 @@ void Soul::AnimationState() {
 		if (m_Animation->GetCurrentFrame() == 9)
 			m_IsAttacking = false;
 	}
-	//fall
-	/*if (m_IsFalling)
-		m_Animation->SetProps("Soul_fall", 1, 4, 150);*/
-	//beingHit
-	if (m_beingHit) {
-		m_Animation->SetProps("Soul_death", 1, 8, 250);
-		if (m_Animation->GetCurrentFrame() == 7) {
-			kill();
-			Game::Getinstance()->m_Score += 1;
-		}
-	}
+	else
+		if (m_IsRunning)
+			m_Animation->SetProps("Soul_move", 1, 8, 150);
+	else
+		m_Animation->SetProps("Soul_idle", 1, 5, 150);
 }
 
 
@@ -125,15 +123,7 @@ void Soul::moveToPlayer() {
 		m_IsAttacking = true;
 		
 	}
-
-	/*if ((m_Vision >= -200 && m_Vision < 0) || (m_Vision <= 200 && m_Vision > 0)) {
-		if (abs(m_high) < 100) {
-			m_IsAttacking = true;
-		}
-		else m_Rigidbody->UnsetForce();
-	}*/
 	autoMove();
-	//KnockBack();
 }
 
 

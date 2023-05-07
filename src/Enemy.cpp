@@ -9,17 +9,18 @@
 
 Enemy::Enemy(Properties* props, float Row, float FrameCount, float AnimationSpeed, float x, float y, float w, float h) :Character(props, Row, FrameCount, AnimationSpeed, x, y, w, h) {
 	m_JumpTime = JUMP_TIME;
-	m_JumpForce = JUMP_FORCE;
+	m_JumpForce = KNOCKBACKFORCE;
 	m_AttackTime = ATTACK_TIME;
 	
 }
 
 
 void Enemy::Update(float dt) {	
-	moveToPlayer();
+	moveToPlayer(dt);
 	Character::Update(dt);
 	AnimationState();
 	m_Animation->Update(dt);
+	
 	
 }
 
@@ -27,40 +28,43 @@ void Enemy::OnCollide(Character* source)
 {
 	if (source->GetName() == "bullet") {
 		HP--;
-		
-	}
-	
-	if (p == 1 && source->GetName() == "player") {
-		Game::Getinstance()->Getplayer()->m_BeingHit = true;
+		m_beingHit = true;
 	}
 	if (HP == 0)
-		m_beingHit = true;
+		dead = true;
 }
 
 void Enemy::AnimationState() {
-	//idle
-	m_Animation->SetProps("Enemy_idle", 1, 4, 170);
-	//run 
-	if (m_IsRunning && !m_IsAttacking)
-		m_Animation->SetProps("Enemy_run", 1, 4, 150);
-	//attack
-	if (m_IsAttacking) {
-		m_Animation->SetProps("Enemy_attack", 1, 4, 100);
-		if (m_Animation->GetCurrentFrame() == 3)
-			p = 1;
-	}
-	
-	//fall
-	if (m_beingHit) {
+
+	if (dead) {
 		m_Animation->SetProps("Enemy_fall", 1, 4, 100);
 		if (m_Animation->GetCurrentFrame() == 3) {
 			kill();
 			Game::Getinstance()->m_Score += 1;
 		}
 	}
-}
+	else
+		if (m_beingHit) {
+			m_Animation->SetProps("Enemy_beinghit", 1, 4, 200);
+			if (m_Animation->GetCurrentFrame() == 3) {
+				m_beingHit = false;
+				
+			}
+		}
+		else 
+	if (m_IsAttacking) {
+		m_Animation->SetProps("Enemy_attack", 1, 4, 200);
+		if (m_Animation->GetCurrentFrame() == 3 && CollisionHandler::GetInstance()->checkCollision(Game::Getinstance()->Getplayer()->GetBox(), GetSwordBox()))
+			Game::Getinstance()->Getplayer()->kill();
+	}
+	else if(m_IsRunning)
+		m_Animation->SetProps("Enemy_run", 1, 4, 150);
+	else
+	 m_Animation->SetProps("Enemy_idle", 1, 4, 170);
 
-void Enemy::moveToPlayer() {
+} 
+
+void Enemy::moveToPlayer(float dt) {
 	m_IsRunning = false;
 	m_IsAttacking = false;
 	m_Rigidbody->UnsetForce();
@@ -103,7 +107,7 @@ void Enemy::moveToPlayer() {
 		else m_Rigidbody->UnsetForce();
 	}
 	autoMove();
-	//KnockBack();
+	KnockBack(dt);
 }
 
 
@@ -132,10 +136,49 @@ void Enemy::autoMove() {
 
 SDL_Rect Enemy::GetSwordBox()
 {
-	float x = m_Transform->X;
-	float y = m_Transform->Y;
-	float w = 20;
-	float h = 30;
+	float x, y;
+	if (m_Flip == SDL_FLIP_HORIZONTAL) {
+		 x = m_Transform->X + 20;
+		 y = m_Transform->Y + 36;
+	}
+	if (m_Flip == SDL_FLIP_NONE) {
+		 x = m_Transform->X + 118;
+		 y = m_Transform->Y + 36;
+	}
+	float w = 50;
+	float h = 40;
 	return SDL_Rect(x, y, w, h);
+}
+
+void Enemy::KnockBack(float dt) {
+	if (m_beingHit == true) {
+		m_Rigidbody->UnsetForce();
+		if (m_IsGrounded) {
+			m_IsJumping = true;
+			m_IsGrounded = false;
+			m_Rigidbody->ApplyForceY(UPWARD * m_JumpForce);
+
+		}
+		if (m_IsJumping && m_JumpTime > 0) {
+			m_JumpTime -= dt;
+			m_Rigidbody->ApplyForceY(UPWARD * m_JumpForce);
+		}
+		else
+		{
+			m_IsJumping = false;
+			m_JumpTime = JUMP_TIME;
+		}
+
+		if (m_Flip == SDL_FLIP_NONE) {
+
+			m_Rigidbody->ApplyForceX(BACKWARD * 2);
+
+		}
+		if (m_Flip == SDL_FLIP_HORIZONTAL) {
+
+			m_Rigidbody->ApplyForceX(FORWARD * 2);
+
+		}
+	}
 }
 
