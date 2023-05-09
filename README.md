@@ -16,10 +16,13 @@
 
 * level 1
 <img src="res/texture/demo1.png">
+
 * level 2
 <img src="res/texture/demo2.png">
+
 * level 3
 <img src="res/texture/demo3.png">
+
 * Enemies
 <img src="res/texture/demo4.png">
 
