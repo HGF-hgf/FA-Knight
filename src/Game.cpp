@@ -29,7 +29,7 @@ Game::Game(int score, int lv, float time)
 	m_x = { 200, 600, 1000, 2080, 4470, 4593, 4690, 4822, 10154, 10358 };
 	m_y = { 586 ,586 , 489, 489, 456, 456, 456, 456, 617, 617 };
 
-	player = new Player(new Properties("player", 11700, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
+	player = new Player(new Properties("player", 0, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
 	addCharacter(player);
 
 	//lv1
@@ -160,7 +160,10 @@ void Game::RenderGUI() {
 	if (player->dead) {
 		Engine::Getinstance()->GoToPage("gameover");
 	}
-	
+	/*if (player->GetX() >= 11834) {
+		Game::Getinstance()->m_Ended = true;
+		Engine::Getinstance()->GoToPage("end");
+	}*/
 }
 
 

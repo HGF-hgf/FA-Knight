@@ -73,7 +73,7 @@ void Enemy::moveToPlayer(float dt) {
 	m_Vision = Game::Getinstance()->Getplayer()->GetX() - GetX();
 	m_high = Game::Getinstance()->Getplayer()->GetY() - GetY();
 
-	if ((m_Vision <= 300 && m_Vision > 100) && abs(m_high) < 30) {
+	if ((m_Vision <= 300 && m_Vision > 100) && abs(m_high) < 60) {
 		m_Rigidbody->ApplyForceX(FORWARD * VEL);
 		m_Flip = SDL_FLIP_NONE;
 		m_IsRunning = true;	
@@ -83,7 +83,7 @@ void Enemy::moveToPlayer(float dt) {
 		}
 	}
 
-	if ((m_Vision >= -300 && m_Vision < -40) && abs(m_high) < 30) {
+	if ((m_Vision >= -300 && m_Vision < -40) && abs(m_high) < 60) {
 		m_Rigidbody->ApplyForceX(BACKWARD * VEL);
 		m_Flip = SDL_FLIP_HORIZONTAL;
 		m_IsRunning = true;

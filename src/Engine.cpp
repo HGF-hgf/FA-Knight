@@ -13,6 +13,7 @@
 #include"GamePage.h"
 #include"PauseMenu.h"
 #include"GameOver.h"
+#include"End.h"
 
 using namespace std;
 
@@ -37,6 +38,8 @@ bool Engine::Init() {
 	m_music.push_back(lv2);//4
 	Mix_Music* lv3 = Mix_LoadMUS("C:/Users/PC/Desktop/hgf/Project1/texture/sfx/lv3.wav");
 	m_music.push_back(lv3);//5
+	Mix_Music* ending = Mix_LoadMUS("C:/Users/PC/Desktop/hgf/Project1/texture/sfx/ending.wav");
+	m_music.push_back(ending);//6
 
 	/*if (!home) {
 		cout << "Failed\n" << Mix_GetError();
@@ -111,6 +114,7 @@ bool Engine::Init() {
 	PageMap["game"] = new GamePage;
 	PageMap["pause"] = new PauseMenu;
 	PageMap["gameover"] = new GanmeOver;
+	PageMap["end"] = new End;
 
 	GoToPage("home");
 	

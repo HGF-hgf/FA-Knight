@@ -115,6 +115,7 @@ void Player::Update(float dt) {
 	Character::Update(dt);	
 	AnimationState();
 	m_Animation->Update(dt);
+	
 	if (GetY() >= 647) {
 		dead = true;
 	}
@@ -128,7 +129,6 @@ void Player::OnCollide(Character* source)
 	if (source->GetName() == "soulbullet") {
 		m_BeingHit = true;
 	}
-
 	if (source->GetName() == "portal1") {
 		m_Transform->X = 4200;
 		m_Transform->Y = 100;

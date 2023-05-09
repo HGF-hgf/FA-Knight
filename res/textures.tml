@@ -45,6 +45,7 @@
 	<texture id="home-bg" source="texture/cheem5.jpg"/>
 	<texture id="pause-bg" source="texture/cheems.jpg"/>
 	<texture id="die-bg" source="texture/cheems5.jpg"/>
+	<texture id="end-bg" source="texture/cheems1.jpg"/>
 
 
 </textures>
