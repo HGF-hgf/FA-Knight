@@ -33,6 +33,11 @@ bool Engine::Init() {
 	m_music.push_back(pause);//2
 	Mix_Music* gameover = Mix_LoadMUS("C:/Users/PC/Desktop/hgf/Project1/texture/sfx/die.wav");
 	m_music.push_back(gameover);//3
+	Mix_Music* lv2 = Mix_LoadMUS("C:/Users/PC/Desktop/hgf/Project1/texture/sfx/lv2.wav");
+	m_music.push_back(lv2);//4
+	Mix_Music* lv3 = Mix_LoadMUS("C:/Users/PC/Desktop/hgf/Project1/texture/sfx/lv3.wav");
+	m_music.push_back(lv3);//5
+
 	/*if (!home) {
 		cout << "Failed\n" << Mix_GetError();
 	}*/
@@ -120,16 +125,6 @@ bool Engine::Init() {
 void Engine::Render() {
 	SDL_SetRenderDrawColor(m_Renderer, 164, 218, 254, 255);
 	SDL_RenderClear(m_Renderer);
-	
-	/*Texture::Getinstance()->Draw("bg", 0, 0, 1920, 1080, 1, 0.9, 0.3);
-
-	m_LevelMap->Render();
-
-	for (auto& it : m_GameObjects) {
-		int id = it.first;
-		GameObject* object = it.second;
-		object->Draw();
-	}*/
 
 	PageMap[currentPage]->OnRender();
 

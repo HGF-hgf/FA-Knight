@@ -48,19 +48,20 @@ void Enemy::AnimationState() {
 			m_Animation->SetProps("Enemy_beinghit", 1, 4, 200);
 			if (m_Animation->GetCurrentFrame() == 3) {
 				m_beingHit = false;
-				
+
 			}
 		}
-		else 
-	if (m_IsAttacking) {
-		m_Animation->SetProps("Enemy_attack", 1, 4, 200);
-		if (m_Animation->GetCurrentFrame() == 3 && CollisionHandler::GetInstance()->checkCollision(Game::Getinstance()->Getplayer()->GetBox(), GetSwordBox()))
-			Game::Getinstance()->Getplayer()->kill();
-	}
-	else if(m_IsRunning)
-		m_Animation->SetProps("Enemy_run", 1, 4, 150);
-	else
-	 m_Animation->SetProps("Enemy_idle", 1, 4, 170);
+		else
+			if (m_IsAttacking) {
+				m_Animation->SetProps("Enemy_attack", 1, 4, 200);
+				if (m_Animation->GetCurrentFrame() == 3 && CollisionHandler::GetInstance()->checkCollision(Game::Getinstance()->Getplayer()->GetBox(), GetSwordBox()))
+					Game::Getinstance()->Getplayer()->m_BeingHit = true;
+			}
+			else
+				if (m_IsRunning)
+					m_Animation->SetProps("Enemy_run", 1, 4, 150);
+				else
+					m_Animation->SetProps("Enemy_idle", 1, 4, 170);
 
 } 
 
@@ -72,7 +73,7 @@ void Enemy::moveToPlayer(float dt) {
 	m_Vision = Game::Getinstance()->Getplayer()->GetX() - GetX();
 	m_high = Game::Getinstance()->Getplayer()->GetY() - GetY();
 
-	if (m_Vision <= 300 && m_Vision > 100) {
+	if ((m_Vision <= 300 && m_Vision > 100) && abs(m_high) < 30) {
 		m_Rigidbody->ApplyForceX(FORWARD * VEL);
 		m_Flip = SDL_FLIP_NONE;
 		m_IsRunning = true;	
@@ -82,7 +83,7 @@ void Enemy::moveToPlayer(float dt) {
 		}
 	}
 
-	if (m_Vision >= -300 && m_Vision < -40) {
+	if ((m_Vision >= -300 && m_Vision < -40) && abs(m_high) < 30) {
 		m_Rigidbody->ApplyForceX(BACKWARD * VEL);
 		m_Flip = SDL_FLIP_HORIZONTAL;
 		m_IsRunning = true;
@@ -101,7 +102,7 @@ void Enemy::moveToPlayer(float dt) {
 	}
 
 	if ((m_Vision >= -40 && m_Vision < 0) || (m_Vision <= 100 && m_Vision > 0)) {
-		if (abs(m_high) < 100) {
+		if (abs(m_high) < 50) {
 			m_IsAttacking = true;
 		}
 		else m_Rigidbody->UnsetForce();

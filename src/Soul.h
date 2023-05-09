@@ -21,7 +21,6 @@ public:
 	virtual void OnCollide(Character* source);
 	void moveToPlayer();
 	void autoMove();
-	//void KnockBack();
 
 private:
 	void AnimationState();

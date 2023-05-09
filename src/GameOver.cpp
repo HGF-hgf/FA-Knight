@@ -8,7 +8,6 @@ void GanmeOver::OnRender()
 
 void GanmeOver::OnRenderGUI()
 {
-	//cout << Engine::Getinstance()->p_score << endl;
 	auto m_backgroundTexure = Texture::Getinstance()->GetTexture("die-bg");
 	auto m_io = ImGui::GetIO();
 	ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
@@ -44,7 +43,7 @@ void GanmeOver::OnRenderGUI()
 	ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 
 	ImGui::SetWindowFontScale(3);
-	ImGui::Text("Score: %d", Engine::Getinstance()->p_score);
+	ImGui::Text("Enemies Killed: %d", Engine::Getinstance()->p_score);
 	ImGui::Text("Time: %s:%s ", Engine::Getinstance()->m_min.c_str(), Engine::Getinstance()->m_sec.c_str());
 
 	if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage2, ImVec2(96, 96))) {
@@ -66,7 +65,6 @@ void GanmeOver::OnRenderGUI()
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar(2);
 	ImGui::End();
-	
 }
 
 void GanmeOver::OnOpen()

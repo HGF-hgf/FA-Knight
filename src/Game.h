@@ -22,6 +22,8 @@ public:
 
 
 	Player* Getplayer() { return player; }
+	vector<int> m_x = { 1044, 1518, 4470, 4593, 4690, 4822, 10154, 10358 };
+	vector<int> m_y = { 489,489,456,456,456,456,617,617 };
 	std::unordered_map<int, GameObject*> m_GameObjects;
 	inline Map* GetMap() { return m_LevelMap; }
 	inline SDL_Renderer* GetRenderer() { return m_Renderer; };
@@ -42,7 +44,6 @@ private:
 	SDL_Renderer* m_Renderer;
 	Player* player;
 	Enemy* enemy;
-	Portal* portal;
 	float m_lasttIme;
 	
 

@@ -8,7 +8,6 @@
 #include"Bullet.h"
 #include"Page.h"
 #include"Game.h"
-//#include"GameState.h"
 
 using namespace std;
 

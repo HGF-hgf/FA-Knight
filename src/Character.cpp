@@ -34,7 +34,7 @@ Character::Character(Properties* props, float Row, float FrameCount, float Anima
 
 void Character::Draw() {
 	m_Animation->Draw(m_Transform->X, m_Transform->Y, m_width, m_height, 1, 1, m_Flip);
-	m_Collider->Draw();
+	//m_Collider->Draw();
 }
 
 void Character::Update(float dt) {

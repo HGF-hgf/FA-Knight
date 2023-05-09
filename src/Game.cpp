@@ -24,32 +24,64 @@ Game::Game(int score, int lv, float time)
 	this->lv = lv;
 	m_lasttIme = SDL_GetTicks();
 
-	m_LevelMap = MapParser::GetInstance()->GetMap("Level" + to_string(lv));
-	//Engine::Getinstance()->m_lv = lv;
-	
+	m_LevelMap = MapParser::GetInstance()->GetMap("Level1");
 
-	
-	player = new Player(new Properties("player", 0, 508, 128, 128), 1, 6, 150, -48, -36, -30, -60);
+	m_x = { 200, 600, 1000, 2080, 4470, 4593, 4690, 4822, 10154, 10358 };
+	m_y = { 586 ,586 , 489, 489, 456, 456, 456, 456, 617, 617 };
+
+	player = new Player(new Properties("player", 11700, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
 	addCharacter(player);
 
-	//310
-	//1900
-
-	
-	for (int i = 0; i < 2;++i) {
-		enemy = new Enemy(new Properties("enemy", /*rand() % (1900 - 310 + 1) + 310*/400 * (i+1) , 400, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
+	//lv1
+	for (int i = 0; i < rand() % (5 - 4 + 1) + 4;++i) {
+		enemy = new Enemy(new Properties("enemy", rand() % (1900 - 310 + 1) + 310, 300, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
 		addCharacter(enemy);
 	}
 
-	
-
-	/*for (int i = 0; i < 5;++i) {
-		Soul* soul = new Soul(new Properties("soul", rand() % (1900 - 310 + 1) + 310, 400, 128, 128), 1, 5, 150, -48, -30, -30, -76);
+	for (int i = 0; i < 3;++i) {
+		Soul* soul = new Soul(new Properties("soul", rand() % (1900 - 500 + 1) + 500, 400, 128, 128), 1, 5, 150, -48, -30, -30, -76);
 		addCharacter(soul);
-	}*/
+	}
 
-	portal = new Portal(new Properties("portal", 2200, 350, 192, 192), 1, 9, 150, -80, -16, -60, -171);
-	addCharacter(portal);
+	// lv2.1
+	for (int i = 0; i < rand() % (3 - 2 + 1) + 2;++i) {
+		enemy = new Enemy(new Properties("enemy", rand() % (6855 - 6340 + 1) + 6340, 550, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
+		addCharacter(enemy);
+	}
+
+	for (int i = 0; i < 1;++i) {
+		Soul* soul = new Soul(new Properties("soul", rand() % (6864 - 6350 + 1) + 6350, 550, 128, 128), 1, 5, 150, -48, -30, -30, -76);
+		addCharacter(soul);
+	}
+	//lv2.2
+	for (int i = 0; i < 3;++i) {
+		enemy = new Enemy(new Properties("enemy", rand() % (4872 - 4464 + 1) + 4464, 550, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
+		addCharacter(enemy);
+	}
+	//lv3
+	for (int i = 0; i < rand() % (9 - 7 + 1) + 7;++i) {
+		enemy = new Enemy(new Properties("enemy", rand() % (11200 - 9300 + 1) + 9300, 160, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
+		addCharacter(enemy);
+	}
+
+	Portal* portal1 = new Portal(new Properties("portal1", 2300, 350, 192, 192), 1, 8, 150, -80, -16, -60, -171);
+	addCharacter(portal1);
+
+	Portal* portal2 = new Portal(new Properties("portal2", 7000, 400, 192, 192), 1, 9, 150, -80, -16, -60, -171);
+	addCharacter(portal2);
+
+	Portal* portal3 = new Portal(new Properties("portal3", 11810, 360, 192, 192), 1, 8, 150, -80, -16, -60, -171);
+	addCharacter(portal3);
+
+	for (int i = 0;i < size(m_x);++i) {
+		Portal* lazer = new Portal(new Properties("lazer", m_x[i], m_y[i], 48, 96), 1, 18, 70, -6, 0, -36, -96);
+		addCharacter(lazer);
+	}
+
+	for (int i = 0; i < 4;++i) {
+		Portal* hammer = new Portal(new Properties("hammer", 10600 + 192*i, 510, 96, 192), 1, 8, 180, 0, 0, -96, -192);
+		addCharacter(hammer);
+	}
 
 	Camera::GetInstance()->SetTarget(player->GetOrigin());
 
@@ -58,7 +90,8 @@ Game::Game(int score, int lv, float time)
 void Game::Render()
 {
 	Texture::Getinstance()->Draw("bg1", 0, 0, 1920, 1080, 1, 0.9, 0.45);
-	Texture::Getinstance()->Draw("bg2", 1900, 0, 1920, 1080, 1, 0.9, 0.45);
+	Texture::Getinstance()->Draw("bg2", 1910, 0, 2220, 1080, 1, 0.9, 0.45);
+	Texture::Getinstance()->Draw("bg3", 4000, 0, 2220, 1080, 1, 0.9, 0.45);
 	m_LevelMap->Render();
 
 	for (auto& it : m_GameObjects) {
@@ -71,10 +104,10 @@ void Game::Render()
 			Vector2D cam = Camera::GetInstance()->GetPosition();
 			SDL_Rect m_Box = enemy->GetSwordBox();
 			SDL_Rect box = { (int)(m_Box.x - cam.X), (int)(m_Box.y - cam.Y), m_Box.w,  m_Box.h };
-			SDL_RenderDrawRect(Engine::Getinstance()->GetRenderer(), &box);
+			//SDL_RenderDrawRect(Engine::Getinstance()->GetRenderer(), &box);
 		}
 	}
-	
+
 }
 
 void Game::RenderGUI() {
@@ -95,7 +128,7 @@ void Game::RenderGUI() {
 		auto buttonImage = Texture::Getinstance()->GetTexture("game-button-0");
 		auto io = ImGui::GetIO();
 
-		ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.23f, io.DisplaySize.y * 0.07f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
+		ImGui::SetNextWindowPos(ImVec2(io.DisplaySize.x * 0.3f, io.DisplaySize.y * 0.07f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
@@ -115,7 +148,7 @@ void Game::RenderGUI() {
 		}
 		ImGui::SameLine();
 		ImGui::SetWindowFontScale(3);
-		ImGui::Text("Score: %d     ", m_Score);
+		ImGui::Text("Enemies Killed: %d    ", m_Score);
 		ImGui::SameLine();
 		ImGui::Text("Time: %s:%s ", minstr.c_str(), secstr.c_str());
 
@@ -127,7 +160,7 @@ void Game::RenderGUI() {
 	if (player->dead) {
 		Engine::Getinstance()->GoToPage("gameover");
 	}
-
+	
 }
 
 

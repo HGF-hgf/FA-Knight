@@ -46,19 +46,17 @@ void Soul::AnimationState() {
 		y = m_Transform->Y + 3;
 
 	}
-	//idle
+
 	if (m_beingHit) {
-		m_Animation->SetProps("Soul_death", 1, 8, 250);
+		m_Animation->SetProps("Soul_death", 1, 8, 100);
 		if (m_Animation->GetCurrentFrame() == 7) {
 			kill();
 			Game::Getinstance()->m_Score += 1;
 		}
 	}
-	
-	//attack
 	else
 	if (m_IsAttacking) {
-		m_Animation->SetProps("Soul_attack", 1, 10, 150);
+		m_Animation->SetProps("Soul_attack", 1, 10, 100);
 
 		if (m_Animation->GetCurrentFrame() == 6 && currentTick - m_lastAttack > S_ATTACK_TIME)
 		{
@@ -88,7 +86,7 @@ void Soul::moveToPlayer() {
 	m_Vision = Game::Getinstance()->Getplayer()->GetX() - GetX();
 	m_high = Game::Getinstance()->Getplayer()->GetY() - GetY();
 
-	if (m_Vision <= 300 && m_Vision > 0) {
+	if (m_Vision <= 300 && m_Vision > 0 && m_high < 60) {
 		m_Rigidbody->ApplyForceX(FORWARD * VEL);
 		m_Flip = SDL_FLIP_NONE;
 		m_IsRunning = true;
@@ -98,7 +96,7 @@ void Soul::moveToPlayer() {
 		}
 	}
 
-	if (m_Vision >= -300 && m_Vision < 0) {
+	if (m_Vision >= -300 && m_Vision < 0 && m_high < 60) {
 		m_Rigidbody->ApplyForceX(BACKWARD * VEL);
 		m_Flip = SDL_FLIP_HORIZONTAL;
 		m_IsRunning = true;
@@ -118,34 +116,35 @@ void Soul::moveToPlayer() {
 
 	//Attack
 	
-	if (((m_Vision >= -200 && m_Vision < 5) || (m_Vision <= 200 && m_Vision > 5)) ) {
+	if (((m_Vision >= -180 && m_Vision < 5) || (m_Vision <= 180 && m_Vision > 5)) && m_high < 60) {
 		m_Rigidbody->UnsetForce();
 		m_IsAttacking = true;
-		
 	}
 	autoMove();
 }
 
 
 void Soul::autoMove() {
-	if (abs(m_Vision) > 300 && !m_IsFalling) {
+	if (!IsDead()) {
+		if (abs(m_Vision) > 300 && !m_IsFalling) {
 
-		if (CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 1 || CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 4) {
-			m_Flip = SDL_FLIP_HORIZONTAL;
-		}
+			if (CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 1 || CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 4) {
+				m_Flip = SDL_FLIP_HORIZONTAL;
+			}
 
-		if (CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 2 || (CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 3)) {
-			m_Flip = SDL_FLIP_NONE;
-		}
+			if (CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 2 || (CollisionHandler::GetInstance()->checkNextTile(m_Collider->Get()) == 3)) {
+				m_Flip = SDL_FLIP_NONE;
+			}
 
-		if (m_Flip == SDL_FLIP_HORIZONTAL && !m_IsAttacking) {
-			m_Rigidbody->ApplyForceX(BACKWARD * VEL);
-			m_IsRunning = true;
-		}
+			if (m_Flip == SDL_FLIP_HORIZONTAL && !m_IsAttacking) {
+				m_Rigidbody->ApplyForceX(BACKWARD * VEL);
+				m_IsRunning = true;
+			}
 
-		if (m_Flip == SDL_FLIP_NONE && !m_IsAttacking) {
-			m_Rigidbody->ApplyForceX(FORWARD * VEL);
-			m_IsRunning = true;
+			if (m_Flip == SDL_FLIP_NONE && !m_IsAttacking) {
+				m_Rigidbody->ApplyForceX(FORWARD * VEL);
+				m_IsRunning = true;
+			}
 		}
 	}
 }

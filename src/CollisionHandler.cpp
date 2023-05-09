@@ -40,7 +40,7 @@ int CollisionHandler::checkTileID(SDL_Rect a) {
 	for (int i = left_tile; i <= right_tile; ++i) {
 		for (int j = top_tile; j <= bottom_tile; ++j) {
 			if (m_CollisionTilemap[j][i] > 0) {
-				return m_CollisionTilemap[j][i];
+				return m_CollisionTilemap[j][i];				
 			}
 		}
 	}

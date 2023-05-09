@@ -52,8 +52,20 @@ void PauseMenu::OnRenderGUI()
 		
 		Engine::Getinstance()->GoToPage("game");
 		
-		Mix_PlayMusic(Engine::Getinstance()->m_music[1], -1);
-		Mix_VolumeMusic(5);
+		if (Game::Getinstance()->Getplayer()->GetX() < 3900) {
+			Mix_PlayMusic(Engine::Getinstance()->m_music[1], -1);
+			Mix_VolumeMusic(5);
+		}
+
+		if (Game::Getinstance()->Getplayer()->GetX() < 8700 && Game::Getinstance()->Getplayer()->GetX() > 4000 ) {
+			Mix_PlayMusic(Engine::Getinstance()->m_music[4], -1);
+			Mix_VolumeMusic(5);
+		}
+
+		if (Game::Getinstance()->Getplayer()->GetX() > 8800) {
+			Mix_PlayMusic(Engine::Getinstance()->m_music[5], -1);
+			Mix_VolumeMusic(5);
+		}
 	}
 
 	ImGui::PopStyleColor(1);

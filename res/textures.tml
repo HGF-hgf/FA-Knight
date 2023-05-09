@@ -19,13 +19,20 @@
 	<texture id="Enemy_attack" source="texture/enemy_attack.png"/>
 	<texture id="Enemy_fall" source="texture/enemy_fall.png"/>
 
-	<texture id="portal1" source="texture/portal1.png"/>
+	<texture id="portal1" source="texture/portal3.png"/>
+	<texture id="portal2" source="texture/portal1.png"/>
+	<texture id="portal3" source="texture/portal2.png"/>
+	
+	<texture id="lazer" source="texture/lazer_trap.png"/>
+	<texture id="hammer" source="texture/Hammer.png"/>
+
 
 	<texture id="explosion" source="texture/Explosion.png"/>
 	<texture id="bullet" source="texture/projectile-Sheet.png"/>
+	
 	<texture id="bg1" source="texture/bg2.jpg"/>
 	<texture id="bg2" source="texture/bg3.jpg"/>
-
+	<texture id="bg3" source="texture/bg4.png"/>
 
 	<texture id="home-button-0" source="texture/1.png"/>
 	<texture id="home-button-1" source="texture/3.png"/>
