@@ -37,11 +37,12 @@ void Portal::AnimationState()
 		}
 	}
 
-	for (int i = 0; i < 3;++i) {
+	for (int i = 0; i < 4;++i) {
 		if (GetX() == 10600 + 192 * i) {
 			m_Animation->SetProps("hammer", 1, 8, 180);
-			if (m_Animation->GetCurrentFrame() >= 2 && m_Animation->GetCurrentFrame() <= 4 && CollisionHandler::GetInstance()->checkCollision(Game::Getinstance()->Getplayer()->GetBox(), m_Collider->Get()))
+			if ((m_Animation->GetCurrentFrame() >= 1 && m_Animation->GetCurrentFrame() <= 4) && CollisionHandler::GetInstance()->checkCollision(Game::Getinstance()->Getplayer()->GetBox(), m_Collider->Get())) {
 				Game::Getinstance()->Getplayer()->m_BeingHit = true;
+			}
 		}
 	}
 }

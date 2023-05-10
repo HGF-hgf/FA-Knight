@@ -149,6 +149,7 @@ void Player::AnimationState() {
 	//idle
 	if (m_BeingHit) {
 		m_Animation->SetProps("player_death", 1, 4, 300);
+		Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[5], 0);
 		if (m_Animation->GetCurrentFrame() == 3)
 			dead = true;
 	}

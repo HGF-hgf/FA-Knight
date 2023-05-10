@@ -28,16 +28,19 @@
 
 
 ## 📦 Libararies 
-- SDL2
+- SDL2 (screen processing and control)
 - TinyXml (A small and convenient library supporting Xml operations for C++)
-- ImGui
+- ImGui (create a user interface)
    
-🛠️ Tools
+## 🛠️ Tools
 - Visual Studio Code
 - Tiled (use to draw map tile)
 - Aseprite (use to draw player)
 
-
+## 📚 Reference source
+* Download libraries: https://github.com/microsoft/vcpkg
+* SDL2 functions: https://wiki.libsdl.org/SDL2/CategoryAPI
+* ...
     
 
 

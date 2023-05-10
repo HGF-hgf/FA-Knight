@@ -61,6 +61,10 @@ bool Engine::Init() {
 	m_sfx.push_back(click);//4
 	Mix_VolumeChunk(click, 40);
 
+	Mix_Chunk* GameOver = Mix_LoadWAV("C:/Users/PC/Desktop/hgf/Project1/texture/sfx/Game Over 2.wav");
+	m_sfx.push_back(GameOver);//5
+	Mix_VolumeChunk(GameOver, 5);
+
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
 		SDL_Log("FAILED TO INITIALIZE SDL\n", SDL_GetError());
 		return false;
