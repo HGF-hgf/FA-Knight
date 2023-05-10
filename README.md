@@ -9,8 +9,8 @@
 ## 🎮 How to play
 * Left Click or D to move forward
 * Right Click or A to move backward
-* Space or W to jump
-
+* Up Click or W to jump
+* Space to shoot
 
 ## 🖼️ Preview
 
