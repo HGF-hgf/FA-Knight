@@ -37,11 +37,8 @@ void Player::Update(float dt) {
 		y = m_Transform->Y + 44;
 		
 	}
-	cout << GetX() << " " << GetY() << endl; //159 413 // 3010 607
-	//2181 445
-	/*if (m_Transform->X >= 500) {
-		Engine::Getinstance()->ChangeLv = true;
-	}*/
+	//cout << GetX() << " " << GetY() << endl; //159 413 // 3010 607
+
 
 	//RUN FORWARD
 	if (!m_BeingHit) {
@@ -115,7 +112,7 @@ void Player::Update(float dt) {
 	Character::Update(dt);	
 	AnimationState();
 	m_Animation->Update(dt);
-	
+
 	if (GetY() >= 647) {
 		dead = true;
 	}
@@ -138,6 +135,13 @@ void Player::OnCollide(Character* source)
 		m_Transform->X = 8934;
 		m_Transform->Y = 222;
 		Mix_PlayMusic(Engine::Getinstance()->m_music[5], -1);
+	}
+	if (source->GetName() == "portal3") {
+		Game::Getinstance()->m_Ended = true;
+		m_Transform->X = 13280;
+		m_Transform->Y = 222;
+		Mix_PlayMusic(Engine::Getinstance()->m_music[6], -1);
+		
 	}
 }
 

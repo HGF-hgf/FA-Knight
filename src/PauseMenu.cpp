@@ -62,7 +62,11 @@ void PauseMenu::OnRenderGUI()
 			Mix_VolumeMusic(5);
 		}
 
-		if (Game::Getinstance()->Getplayer()->GetX() > 8800) {
+		if (Game::Getinstance()->Getplayer()->GetX() < 11834 && Game::Getinstance()->Getplayer()->GetX() > 8800) {
+			Mix_PlayMusic(Engine::Getinstance()->m_music[5], -1);
+			Mix_VolumeMusic(5);
+		}
+		if ( Game::Getinstance()->Getplayer()->GetX() >= 11835) {
 			Mix_PlayMusic(Engine::Getinstance()->m_music[5], -1);
 			Mix_VolumeMusic(5);
 		}

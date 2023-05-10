@@ -32,7 +32,7 @@ public:
 	static Game* s_Instance;
 
 	bool m_Paused = false;
-	//bool m_Ended = false;
+	bool m_Ended = false;
 	int m_Score = 0;
 	float m_Time = 0;
 	int lv;

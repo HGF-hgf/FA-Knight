@@ -26,10 +26,8 @@ Game::Game(int score, int lv, float time)
 
 	m_LevelMap = MapParser::GetInstance()->GetMap("Level1");
 
-	m_x = { 200, 600, 1000, 2080, 4470, 4593, 4690, 4822, 10154, 10358 };
-	m_y = { 586 ,586 , 489, 489, 456, 456, 456, 456, 617, 617 };
 
-	player = new Player(new Properties("player", 0, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
+	player = new Player(new Properties("player", 11700, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
 	addCharacter(player);
 
 	//lv1
@@ -118,12 +116,14 @@ void Game::RenderGUI() {
 	minstr = (min < 10 ? "0" : "") + to_string(min);
 	secstr = (sec < 10 ? "0" : "") + to_string(sec);
 
-	Engine::Getinstance()->m_min = minstr;
-	Engine::Getinstance()->m_sec = secstr;
-	Engine::Getinstance()->p_score = m_Score;
+	if (!m_Ended) {
+		Engine::Getinstance()->m_min = minstr;
+		Engine::Getinstance()->m_sec = secstr;
+		Engine::Getinstance()->p_score = m_Score;
+	}
 
 	//Pause
-	if (!player->dead) {
+	if (!player->dead && !m_Ended) {
 		ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 0.0f;
 		auto buttonImage = Texture::Getinstance()->GetTexture("game-button-0");
 		auto io = ImGui::GetIO();
@@ -160,10 +160,67 @@ void Game::RenderGUI() {
 	if (player->dead) {
 		Engine::Getinstance()->GoToPage("gameover");
 	}
-	/*if (player->GetX() >= 11834) {
-		Game::Getinstance()->m_Ended = true;
-		Engine::Getinstance()->GoToPage("end");
-	}*/
+	if (m_Ended) {
+		auto m_backgroundTexure = Texture::Getinstance()->GetTexture("end-bg");
+		auto m_io = ImGui::GetIO();
+		ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
+		ImGui::SetNextWindowSize(m_io.DisplaySize);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		ImGui::Begin("Home Page Background", NULL,
+			ImGuiWindowFlags_NoDecoration |
+			ImGuiWindowFlags_NoScrollbar |
+			ImGuiWindowFlags_NoBringToFrontOnFocus |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoScrollWithMouse);
+
+		ImGui::Image((ImTextureID)m_backgroundTexure,
+			ImVec2(m_io.DisplaySize.x, m_io.DisplaySize.y));
+
+		ImGui::PopStyleVar(2);
+		ImGui::End();
+
+		auto buttonImage2 = Texture::Getinstance()->GetTexture("game-button-3");
+		auto buttonImage3 = Texture::Getinstance()->GetTexture("game-button-2");
+		auto io2 = ImGui::GetIO();
+
+		ImGui::SetNextWindowPos(ImVec2(io2.DisplaySize.x * 0.3f, io2.DisplaySize.y * 0.4f), ImGuiCond_Always, ImVec2(0.5f, 1.0f));
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+		ImGui::Begin("Pause Page Menu 2", NULL,
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoScrollbar |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_AlwaysAutoResize);
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+
+		ImGui::SetWindowFontScale(5);
+		ImGui::Text("Congratulations!!!");
+		ImGui::SetWindowFontScale(3);
+		ImGui::Text("Enemies Killed: %d", Engine::Getinstance()->p_score);
+		ImGui::Text("Time: %s:%s ", Engine::Getinstance()->m_min.c_str(), Engine::Getinstance()->m_sec.c_str());
+
+		if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage2, ImVec2(96, 96))) {
+			Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
+			Engine::Getinstance()->GoToPage("home");
+		}
+		ImGui::SameLine();
+		if (ImGui::ImageButton((ImTextureID)(intptr_t)buttonImage3, ImVec2(96, 96))) {
+
+			Mix_PlayChannel(-1, Engine::Getinstance()->m_sfx[4], 0);
+			Mix_PauseMusic();
+			//Engine::Getinstance()->QuitGame();
+			Engine::Getinstance()->GoToPage("game");
+			Mix_PlayMusic(Engine::Getinstance()->m_music[1], -1);
+			Mix_VolumeMusic(5);
+		}
+
+
+		ImGui::PopStyleColor();
+		ImGui::PopStyleVar(2);
+		ImGui::End();
+	}
 }
 
 
