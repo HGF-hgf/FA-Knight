@@ -22,9 +22,9 @@ public:
 
 
 	Player* Getplayer() { return player; }
-	vector<int> m_x = { 1044, 1518, 4470, 4593, 4690, 4822, 10154, 10358 };
-	vector<int> m_y = { 489,489,456,456,456,456,617,617 };
-	std::unordered_map<int, GameObject*> m_GameObjects;
+	vector<int> m_x = { 200, 600, 1044, 1900, 4470, 4593, 4690, 4822, 10154, 10358 };
+	vector<int> m_y = { 586, 586 ,489, 489, 456, 456, 456, 456, 617, 617 };
+	std::unordered_map<int, GameObject*> m_GameObjects; 
 	inline Map* GetMap() { return m_LevelMap; }
 	inline SDL_Renderer* GetRenderer() { return m_Renderer; };
 	inline bool Paused() { return m_Paused; }

@@ -27,7 +27,7 @@ Game::Game(int score, int lv, float time)
 	m_LevelMap = MapParser::GetInstance()->GetMap("Level1");
 
 
-	player = new Player(new Properties("player", 11700, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
+	player = new Player(new Properties("player", 0, 408, 128, 128), 1, 6, 150, -48, -36, -30, -60);
 	addCharacter(player);
 
 	//lv1
@@ -43,7 +43,7 @@ Game::Game(int score, int lv, float time)
 
 	// lv2.1
 	for (int i = 0; i < rand() % (3 - 2 + 1) + 2;++i) {
-		enemy = new Enemy(new Properties("enemy", rand() % (6855 - 6340 + 1) + 6340, 550, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
+		enemy = new Enemy(new Properties("enemy", rand() % (6750 - 6340 + 1) + 6340, 550, 192, 192), 1, 4, 150, -68, -34, -50, -93);//-68
 		addCharacter(enemy);
 	}
 
